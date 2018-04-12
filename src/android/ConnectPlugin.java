@@ -346,9 +346,15 @@ public class ConnectPlugin extends CordovaPlugin {
             });
 
             return true;
+        } else if (action.equals("setUserID")) {
+            String userID = args.getString(0);
+            executeSetUserID(userID, callbackContext);
+            return true;
         }
+
         return false;
     }
+
 
     private void executeGetDeferredApplink(JSONArray args,
                                            final CallbackContext callbackContext) {
@@ -539,8 +545,8 @@ public class ConnectPlugin extends CordovaPlugin {
 
             String objectType = "";
 
-            while ( objectKeys.hasNext() ) {
-                String key = (String)objectKeys.next();
+            while (objectKeys.hasNext()) {
+                String key = (String) objectKeys.next();
                 String value = jObject.getString(key);
 
                 objectBuilder.putString(key, value);
@@ -561,8 +567,8 @@ public class ConnectPlugin extends CordovaPlugin {
 
                 Iterator<?> actionKeys = jActionProperties.keys();
 
-                while ( actionKeys.hasNext() ) {
-                    String actionKey = (String)actionKeys.next();
+                while (actionKeys.hasNext()) {
+                    String actionKey = (String) actionKeys.next();
 
                     actionBuilder.putString(actionKey, jActionProperties.getString(actionKey));
                 }
@@ -587,13 +593,13 @@ public class ConnectPlugin extends CordovaPlugin {
             showDialogContext.sendPluginResult(pr);
 
             ShareLinkContent.Builder builder = new ShareLinkContent.Builder();
-            if(params.containsKey("link"))
+            if (params.containsKey("link"))
                 builder.setContentUrl(Uri.parse(params.get("link")));
-            if(params.containsKey("caption"))
+            if (params.containsKey("caption"))
                 builder.setContentTitle(params.get("caption"));
-            if(params.containsKey("picture"))
+            if (params.containsKey("picture"))
                 builder.setImageUrl(Uri.parse(params.get("picture")));
-            if(params.containsKey("description"))
+            if (params.containsKey("description"))
                 builder.setContentDescription(params.get("description"));
 
             messageDialog.show(builder.build());
@@ -605,7 +611,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
     private void executeGraph(JSONArray args, CallbackContext callbackContext) throws JSONException {
         lastGraphContext = callbackContext;
-        CallbackContext graphContext  = callbackContext;
+        CallbackContext graphContext = callbackContext;
         PluginResult pr = new PluginResult(PluginResult.Status.NO_RESULT);
         pr.setKeepCallback(true);
         graphContext.sendPluginResult(pr);
@@ -656,7 +662,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
         if (declinedPermission != null) {
             graphContext.error("This request needs declined permission: " + declinedPermission);
-			return;
+            return;
         }
 
         if (publishPermissions && readPermissions) {
@@ -839,7 +845,7 @@ public class ConnectPlugin extends CordovaPlugin {
         }
     }
 
-    private void makeGraphCall(final CallbackContext graphContext ) {
+    private void makeGraphCall(final CallbackContext graphContext) {
         //If you're using the paging URLs they will be URLEncoded, let's decode them.
         try {
             graphPath = URLDecoder.decode(graphPath, "UTF-8");
@@ -888,12 +894,13 @@ public class ConnectPlugin extends CordovaPlugin {
     private boolean isPublishPermission(String permission) {
         return permission != null &&
                 (permission.startsWith(PUBLISH_PERMISSION_PREFIX) ||
-                permission.startsWith(MANAGE_PERMISSION_PREFIX) ||
-                OTHER_PUBLISH_PERMISSIONS.contains(permission));
+                        permission.startsWith(MANAGE_PERMISSION_PREFIX) ||
+                        OTHER_PUBLISH_PERMISSIONS.contains(permission));
     }
 
     /**
      * Create a Facebook Response object that matches the one for the Javascript SDK
+     *
      * @return JSONObject - the response object
      */
     public JSONObject getResponse() {
@@ -903,19 +910,19 @@ public class ConnectPlugin extends CordovaPlugin {
             Date today = new Date();
             long expiresTimeInterval = (accessToken.getExpires().getTime() - today.getTime()) / 1000L;
             response = "{"
-                + "\"status\": \"connected\","
-                + "\"authResponse\": {"
-                + "\"accessToken\": \"" + accessToken.getToken() + "\","
-                + "\"expiresIn\": \"" + Math.max(expiresTimeInterval, 0) + "\","
-                + "\"session_key\": true,"
-                + "\"sig\": \"...\","
-                + "\"userID\": \"" + accessToken.getUserId() + "\""
-                + "}"
-                + "}";
+                    + "\"status\": \"connected\","
+                    + "\"authResponse\": {"
+                    + "\"accessToken\": \"" + accessToken.getToken() + "\","
+                    + "\"expiresIn\": \"" + Math.max(expiresTimeInterval, 0) + "\","
+                    + "\"session_key\": true,"
+                    + "\"sig\": \"...\","
+                    + "\"userID\": \"" + accessToken.getUserId() + "\""
+                    + "}"
+                    + "}";
         } else {
             response = "{"
-                + "\"status\": \"unknown\""
-                + "}";
+                    + "\"status\": \"unknown\""
+                    + "}";
         }
         try {
             return new JSONObject(response);
@@ -928,9 +935,9 @@ public class ConnectPlugin extends CordovaPlugin {
     public JSONObject getFacebookRequestErrorResponse(FacebookRequestError error) {
 
         String response = "{"
-            + "\"errorCode\": \"" + error.getErrorCode() + "\","
-            + "\"errorType\": \"" + error.getErrorType() + "\","
-            + "\"errorMessage\": \"" + error.getErrorMessage() + "\"";
+                + "\"errorCode\": \"" + error.getErrorCode() + "\","
+                + "\"errorType\": \"" + error.getErrorType() + "\","
+                + "\"errorMessage\": \"" + error.getErrorMessage() + "\"";
 
         if (error.getErrorUserMessage() != null) {
             response += ",\"errorUserMessage\": \"" + error.getErrorUserMessage() + "\"";
@@ -982,7 +989,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
     /**
      * Wraps the given object if necessary.
-     *
+     * <p>
      * If the object is null or , returns {@link #JSONObject.NULL}.
      * If the object is a {@code JSONArray} or {@code JSONObject}, no wrapping is necessary.
      * If the object is {@code JSONObject.NULL}, no wrapping is necessary.
@@ -1012,14 +1019,14 @@ public class ConnectPlugin extends CordovaPlugin {
                 return new JSONObject((Map) o);
             }
             if (o instanceof Boolean ||
-                o instanceof Byte ||
-                o instanceof Character ||
-                o instanceof Double ||
-                o instanceof Float ||
-                o instanceof Integer ||
-                o instanceof Long ||
-                o instanceof Short ||
-                o instanceof String) {
+                    o instanceof Byte ||
+                    o instanceof Character ||
+                    o instanceof Double ||
+                    o instanceof Float ||
+                    o instanceof Integer ||
+                    o instanceof Long ||
+                    o instanceof Short ||
+                    o instanceof String) {
                 return o;
             }
             if (o.getClass().getPackage().getName().startsWith("java.")) {
@@ -1028,5 +1035,13 @@ public class ConnectPlugin extends CordovaPlugin {
         } catch (Exception ignored) {
         }
         return null;
+    }
+
+    private void executeSetUserID(String userID, CallbackContext callbackContext) {
+        if (userID) {
+            AppEventsLogger.setUserID(userID);
+        } else {
+            callbackContext.error("Expected non empty userID")
+        }
     }
 }
