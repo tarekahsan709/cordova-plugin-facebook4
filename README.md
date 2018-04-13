@@ -1,4 +1,6 @@
-# cordova-plugin-facebook4
+# cordova-plugin-facebook4-frok-analytics
+
+This is actually a fork of https://github.com/jeduan/cordova-plugin-facebook4.
 
 > Use Facebook SDK version 4 in Cordova projects
 
