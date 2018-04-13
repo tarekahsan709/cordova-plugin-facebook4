@@ -60,9 +60,17 @@ exports.activateApp = function (s, f) {
 }
 
 exports.getDeferredApplink = function (s, f) {
-	  exec(s, f, 'FacebookConnectPlugin', 'getDeferredApplink', [])
+  exec(s, f, 'FacebookConnectPlugin', 'getDeferredApplink', [])
 }
 
 exports.setUserID = function setUserID(s, f, userID) {
-    exec(s, f, 'FacebookConnectPlugin', 'setUserID', [userID]);
+  exec(s, f, 'FacebookConnectPlugin', 'setUserID', userID);
+}
+
+exports.clearUserID = function clearUserID(s, f){
+  exec(s, f , 'FacebookConnectPlugin', 'clearUserID', []);
+}
+
+exports.updateUserProperties = function updateUserProperties(updateProperties, s, f){
+  exec(s, f , 'FacebookConnectPlugin', 'updateUserProperties', updateProperties);
 }

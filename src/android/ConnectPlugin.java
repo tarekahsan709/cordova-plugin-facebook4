@@ -347,8 +347,14 @@ public class ConnectPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("setUserID")) {
-            String userID = args.getString(0);
+            String userID = args;
             executeSetUserID(userID, callbackContext);
+            return true;
+        } else if (action.equals("clearUserID")) {
+            executeClearUserID();
+            return true;
+        } else if (action.equals("updateUserProperties")) {
+            executeUpdateUserProperty(args, callbackContext);
             return true;
         }
 
@@ -1044,4 +1050,47 @@ public class ConnectPlugin extends CordovaPlugin {
             callbackContext.error("Expected non empty userID")
         }
     }
+
+    private void executeClearUserID() {
+        AppEventsLogger.clearUserID();
+    }
+
+    private void executeUpdateUserProperty(args, CallbackContext callbackContext) {
+        CallbackContext graphContext = callbackContext;
+        Bundle parameters = new Bundle();
+        Iterator<String> iter = args.keys();
+
+        while (iter.hasNext()) {
+            String key = iter.next();
+            try {
+                // Try get a String
+                String value = args.getString(key);
+                parameters.putString(key, value);
+            } catch (JSONException e) {
+                // Maybe it was an int
+                Log.w(TAG, "Type in Update user property was not String for key: " + key);
+                try {
+                    int value = args.getInt(key);
+                    parameters.putInt(key, value);
+                } catch (JSONException e2) {
+                    // Nope
+                    Log.e(TAG, "Unsupported type in user property parameters for key: " + key);
+                }
+            }
+        }
+
+        AppEventsLogger.updateUserProperties(parameters, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                if (graphContext != null) {
+                    if (response.getError() != null) {
+                        graphContext.error(getFacebookRequestErrorResponse(response.getError()));
+                    } else {
+                        graphContext.success(response.getJSONObject());
+                    }
+                }
+            }
+        });
+    }
+
 }
