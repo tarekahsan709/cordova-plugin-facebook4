@@ -64,7 +64,7 @@ exports.getDeferredApplink = function (s, f) {
 }
 
 exports.setUserID = function setUserID(s, f, userID) {
-  exec(s, f, 'FacebookConnectPlugin', 'setUserID', userID);
+  exec(s, f, 'FacebookConnectPlugin', 'setUserID', [userID]);
 }
 
 exports.clearUserID = function clearUserID(s, f){
@@ -72,5 +72,5 @@ exports.clearUserID = function clearUserID(s, f){
 }
 
 exports.updateUserProperties = function updateUserProperties(updateProperties, s, f){
-  exec(s, f , 'FacebookConnectPlugin', 'updateUserProperties', updateProperties);
+  exec(s, f , 'FacebookConnectPlugin', 'updateUserProperties', [updateProperties]);
 }

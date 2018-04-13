@@ -347,8 +347,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("setUserID")) {
-            String userID = args;
-            executeSetUserID(userID, callbackContext);
+            executeSetUserID(args, callbackContext);
             return true;
         } else if (action.equals("clearUserID")) {
             executeClearUserID();
@@ -1043,7 +1042,15 @@ public class ConnectPlugin extends CordovaPlugin {
         return null;
     }
 
-    private void executeSetUserID(String userID, CallbackContext callbackContext) {
+    private void executeSetUserID(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() == 0) {
+            // Not enough parameters
+            callbackContext.error("Invalid arguments");
+            return;
+        }
+
+        String userID = args.getString(0);
+
         if (userID) {
             AppEventsLogger.setUserID(userID);
         } else {
@@ -1055,22 +1062,29 @@ public class ConnectPlugin extends CordovaPlugin {
         AppEventsLogger.clearUserID();
     }
 
-    private void executeUpdateUserProperty(args, CallbackContext callbackContext) {
+    private void executeUpdateUserProperty(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() == 0) {
+            // Not enough parameters
+            callbackContext.error("Invalid arguments");
+            return;
+        }
+
         CallbackContext graphContext = callbackContext;
+        JSONObject params = args.getJSONObject(0);
         Bundle parameters = new Bundle();
-        Iterator<String> iter = args.keys();
+        Iterator<String> iter = params.keys();
 
         while (iter.hasNext()) {
             String key = iter.next();
             try {
                 // Try get a String
-                String value = args.getString(key);
+                String value = params.getString(key);
                 parameters.putString(key, value);
             } catch (JSONException e) {
                 // Maybe it was an int
                 Log.w(TAG, "Type in Update user property was not String for key: " + key);
                 try {
-                    int value = args.getInt(key);
+                    int value = params.getInt(key);
                     parameters.putInt(key, value);
                 } catch (JSONException e2) {
                     // Nope
