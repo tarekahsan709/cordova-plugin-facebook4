@@ -1055,6 +1055,7 @@ public class ConnectPlugin extends CordovaPlugin {
             String userID = args.getString(0);
             if (!userID.isEmpty()) {
                 AppEventsLogger.setUserID(userID);
+                callbackContext.success();
             } else {
                 callbackContext.error("Expected non empty userID");
             }
