@@ -1,4 +1,4 @@
-# cordova-plugin-facebook4-frok-analytics
+# cordova-plugin-facebook4-fork-analytics
 
 This is actually a fork of https://github.com/jeduan/cordova-plugin-facebook4.
 
