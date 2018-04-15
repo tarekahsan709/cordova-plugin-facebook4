@@ -63,7 +63,7 @@ exports.getDeferredApplink = function (s, f) {
   exec(s, f, 'FacebookConnectPlugin', 'getDeferredApplink', [])
 }
 
-exports.setUserID = function setUserID(s, f, userID) {
+exports.setUserID = function setUserID(userID, s, f) {
   exec(s, f, 'FacebookConnectPlugin', 'setUserID', [userID]);
 }
 
