@@ -328,15 +328,16 @@ public class ConnectPlugin extends CordovaPlugin {
 
         } else if (action.equals("graphApi")) {
             executeGraph(args, callbackContext);
-
             return true;
+
         } else if (action.equals("appInvite")) {
             executeAppInvite(args, callbackContext);
-
             return true;
+
         } else if (action.equals("getDeferredApplink")) {
             executeGetDeferredApplink(args, callbackContext);
             return true;
+
         } else if (action.equals("activateApp")) {
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -344,22 +345,23 @@ public class ConnectPlugin extends CordovaPlugin {
                     AppEventsLogger.activateApp(cordova.getActivity());
                 }
             });
-
             return true;
+
         } else if (action.equals("setUserID")) {
             executeSetUserID(args, callbackContext);
             return true;
+
         } else if (action.equals("clearUserID")) {
             executeClearUserID();
             return true;
+
         } else if (action.equals("updateUserProperties")) {
             executeUpdateUserProperty(args, callbackContext);
             return true;
-        }
 
+        }
         return false;
     }
-
 
     private void executeGetDeferredApplink(JSONArray args,
                                            final CallbackContext callbackContext) {
@@ -1042,34 +1044,38 @@ public class ConnectPlugin extends CordovaPlugin {
         return null;
     }
 
-    private void executeSetUserID(JSONArray args, CallbackContext callbackContext) {
+    private void executeSetUserID(JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (args.length() == 0) {
             // Not enough parameters
             callbackContext.error("Invalid arguments");
             return;
         }
 
-        String userID = args.getString(0);
-
-        if (userID) {
-            AppEventsLogger.setUserID(userID);
-        } else {
-            callbackContext.error("Expected non empty userID");
+        try {
+            String userID = args.getString(0);
+            if (!userID.isEmpty()) {
+                AppEventsLogger.setUserID(userID);
+            } else {
+                callbackContext.error("Expected non empty userID");
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "No valid user id value provided");
+            callbackContext.error("UserID value invalid");
         }
+
     }
 
     private void executeClearUserID() {
         AppEventsLogger.clearUserID();
     }
 
-    private void executeUpdateUserProperty(JSONArray args, CallbackContext callbackContext) {
+    private void executeUpdateUserProperty(JSONArray args, final CallbackContext graphContext) throws JSONException {
         if (args.length() == 0) {
             // Not enough parameters
-            callbackContext.error("Invalid arguments");
+            graphContext.error("Invalid arguments");
             return;
         }
 
-        CallbackContext graphContext = callbackContext;
         JSONObject params = args.getJSONObject(0);
         Bundle parameters = new Bundle();
         Iterator<String> iter = params.keys();
@@ -1106,5 +1112,4 @@ public class ConnectPlugin extends CordovaPlugin {
             }
         });
     }
-
 }
