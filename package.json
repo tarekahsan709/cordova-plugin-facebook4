@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-facebook4-fork-analytics",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "Cordova Facebook SDK 4 Plugin fork added user property",
   "cordova": {
     "id": "cordova-plugin-facebook4-fork-analytics",
