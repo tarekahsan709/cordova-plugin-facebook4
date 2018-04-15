@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-facebook4-fork-analytics",
-  "version": "1.9.4",
-  "description": "Cordova Facebook SDK 4 Plugin fork added user property",
+  "name": "cordova-plugin-facebook4",
+  "version": "1.10.0",
+  "description": "Cordova Facebook SDK 4 Plugin",
   "cordova": {
-    "id": "cordova-plugin-facebook4-fork-analytics",
+    "id": "cordova-plugin-facebook4",
     "platforms": [
       "android",
       "ios",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tarekahsan709/cordova-plugin-facebook4"
+    "url": "https://github.com/jeduan/cordova-plugin-facebook4"
   },
   "keywords": [
     "cordova",
@@ -23,8 +23,7 @@
     "cordova-browser",
     "facebook-sdk",
     "social",
-    "sharing",
-    "facebook-analytics"
+    "sharing"
   ],
   "license": "Apache-2.0"
 }
