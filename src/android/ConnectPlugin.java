@@ -1068,6 +1068,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
     private void executeClearUserID() {
         AppEventsLogger.clearUserID();
+        callbackContext.success();
     }
 
     private void executeUpdateUserProperty(JSONArray args, final CallbackContext graphContext) throws JSONException {
