@@ -352,7 +352,7 @@ public class ConnectPlugin extends CordovaPlugin {
             return true;
 
         } else if (action.equals("clearUserID")) {
-            executeClearUserID();
+            executeClearUserID(callbackContext);
             return true;
 
         } else if (action.equals("updateUserProperties")) {
@@ -1066,7 +1066,7 @@ public class ConnectPlugin extends CordovaPlugin {
 
     }
 
-    private void executeClearUserID() {
+    private void executeClearUserID(CallbackContext callbackContext) {
         AppEventsLogger.clearUserID();
         callbackContext.success();
     }
