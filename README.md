@@ -1,6 +1,4 @@
-# cordova-plugin-facebook4-fork-analytics
-
-This is actually a fork of https://github.com/jeduan/cordova-plugin-facebook4.
+# cordova-plugin-facebook4
 
 > Use Facebook SDK version 4 in Cordova projects
 
@@ -25,7 +23,7 @@ The Facebook plugin for [Apache Cordova](http://cordova.apache.org/) allows you 
 ## Compatibility
 
   * Cordova >= 5.0.0
-  * cordova-android >= 4.0
+  * cordova-android >= 4.0 (see Android Guide for cordova-android >= 7)
   * cordova-ios >= 3.8
   * cordova-browser >= 3.6
   * Phonegap build (use phonegap-version >= cli-5.2.0, android-minSdkVersion>=15, and android-build-tool=gradle), see [example here](https://github.com/yoav-zibin/phonegap-tictactoe/blob/gh-pages/www/config.xml)
@@ -115,7 +113,7 @@ Share Dialog:
 
 The default dialog mode is [`FBSDKShareDialogModeAutomatic`](https://developers.facebook.com/docs/reference/ios/current/constants/FBSDKShareDialogMode/). You can share that by adding a specific dialog mode parameter. The available share dialog modes are: `share_sheet`, `share_feedBrowser`, `share_native` and `share_feedWeb`. [Read more about share dialog modes](https://developers.facebook.com/docs/reference/ios/current/constants/FBSDKShareDialogMode/)
 
-`caption`, `description` and `picture` were deprecated in Facebok API [v2.9](https://developers.facebook.com/docs/graph-api/changelog/version2.9#gapi-deprecate) and therefore not supported anymore on iOS 
+`caption`, `description` and `picture` were deprecated in Facebok API [v2.9](https://developers.facebook.com/docs/graph-api/changelog/version2.9#gapi-deprecate) and therefore not supported anymore on iOS
 
 Game request:
 
@@ -137,21 +135,21 @@ Send Dialog:
 		description: "The site I told you about",
 		picture: "http://example.com/image.png"
 	}
-	
+
 Share dialog - Open Graph Story: (currently only fully available on Android, iOS currently does not support action_properties)
 
 	{
 		var obj = {};
-	
+
     	obj['og:type'] = 'objectname';
     	obj['og:title'] = 'Some title';
     	obj['og:url'] = 'https://en.wikipedia.org/wiki/Main_Page';
     	obj['og:description'] = 'Some description.';
 
     	var ap = {};
-    	
+
     	ap['expires_in'] = 3600;
-    	
+
     	var options = {
     		method: 'share_open_graph', // Required
         	action: 'actionname', // Required
@@ -159,8 +157,8 @@ Share dialog - Open Graph Story: (currently only fully available on Android, iOS
         	object: JSON.stringify(obj) // Required
     	};
 	}
-	
-In case you want to use custom actions/objects, just prepend the app namespace to the name (E.g: ` obj['og:type'] = 'appnamespace:objectname' `, `action: 'appnamespace:actionname'`. The namespace of a Facebook app is found on the Settings page. 
+
+In case you want to use custom actions/objects, just prepend the app namespace to the name (E.g: ` obj['og:type'] = 'appnamespace:objectname' `, `action: 'appnamespace:actionname'`. The namespace of a Facebook app is found on the Settings page.
 
 
 For options information see: [Facebook share dialog documentation](https://developers.facebook.com/docs/sharing/reference/share-dialog) [Facebook send dialog documentation](https://developers.facebook.com/docs/sharing/reference/send-dialog)
